@@ -8,16 +8,13 @@ const config = {
     database: 'nodedb'
 }
 const mysql = require('mysql')
-const conn = mysql.createConnection(config)
-
-var sql = `INSERT INTO people (name) values ('Larry'), ('Moe'), ('Curly')`
-conn.query(sql)
 
 app.get('/', (req,res) => {
-    var sql = 'SELECT * FROM people'
-    connection.query(sql, (error, results, fields) => {
+    const conn = mysql.createConnection(config)
+    conn.query(`insert into people (name) values ('Larry'), ('Moe'), ('Curly')`)
+    conn.query('select * from people', (error, results, fields) => {
         res.send(
-            `<h1>Full Cycle Rocks!</h1>
+            `<h1>Full Cycle Rockzzz!!!</h1>
             <ol>
                 ${
                     !!results.length ? results.map((p) => `<li>${p.name}</li>`).join("") : ""
@@ -25,9 +22,8 @@ app.get('/', (req,res) => {
             </ol>`
         );
     });
+    conn.end()
 })
-
-conn.end()
 
 app.listen(port, ()=> {
     console.log('Rodando na porta ' + port)
